@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExtensionManifest Version="4.0" ExtensionBundleId="<%= panel.identifier %>.extension" ExtensionBundleVersion="<%= version %>" ExtensionBundleName="<%= panel.identifier %>">
+    <ExtensionList>
+        <Extension Id="<%= panel.identifier %>" Version="<%= version %>" />
+    </ExtensionList>
+    <ExecutionEnvironment>
+        <HostList>
+            <!-- Uncomment Host tags according to the apps you want your panel to support -->
+            <!-- Photoshop -->
+            <Host Name="PHXS" Version="[14.1.2,15.9]" />
+            <Host Name="PHSP" Version="[14.1.2,15.9]" />
+            <!-- Illustrator -->
+            <!-- <Host Name="ILST" Version="[17.0,17.9]" /> -->
+            <!-- InDesign -->
+            <!-- <Host Name="IDSN" Version="[9.1,10.0]" /> -->
+            <!-- Premiere -->
+            <!-- <Host Name="PPRO" Version="[7.0,7.9]" /> -->
+            <!-- PRELUDE -->
+            <!-- <Host Name="PRLD" Version="[2.0,2.9]" />   -->
+            <!-- FLASH Pro -->
+            <!-- <Host Name="FLPR" Version="[13.1,13.9]" /> -->
+        </HostList>
+        <LocaleList>
+            <Locale Code="All" />
+        </LocaleList>
+        <RequiredRuntimeList>
+            <RequiredRuntime Name="CSXS" Version="4.0" />
+        </RequiredRuntimeList>
+    </ExecutionEnvironment>
+    <DispatchInfoList>
+        <Extension Id="<%= panel.identifier %>">
+            <DispatchInfo >
+                <Resources>
+                    <MainPath>./index.html</MainPath>
+                    <!-- <ScriptPath>./jsx/hostscript.jsx</ScriptPath> -->
+                </Resources>
+                <Lifecycle>
+                    <AutoVisible>true</AutoVisible>
+                </Lifecycle>
+                <UI>
+                    <Type>Panel</Type>
+                    <Menu><%= panel.title %></Menu>
+                    <Geometry>
+                        <MaxSize>
+                            <Height><%= panel.sizes.max.height%></Height>
+                            <Width><%= panel.sizes.max.width%></Width>
+                        </MaxSize>
+                        <MinSize>
+                            <Height><%= panel.sizes.min.height%></Height>
+                            <Width><%= panel.sizes.min.width%></Width>
+                        </MinSize>
+                        <Size>
+                            <Height><%= panel.sizes.default.height%></Height>
+                            <Width><%= panel.sizes.default.width%></Width>
+                        </Size>
+                    </Geometry>
+                    <Icons>
+                        <Icon Type="Normal">./icons/dark.png</Icon>
+                        <Icon Type="RollOver">./icons/dark.png</Icon>
+
+                        <Icon Type="DarkNormal">./icons/light.png</Icon>
+                        <Icon Type="DarkRollOver">./icons/light.png</Icon>
+                    </Icons>
+                </UI>
+            </DispatchInfo>
+        </Extension>
+    </DispatchInfoList>
+</ExtensionManifest>

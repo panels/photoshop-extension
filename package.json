@@ -1,0 +1,24 @@
+{
+  "name": "panel-photoshop-extension",
+  "version": "1.0.0",
+  "description": "Generator for Photoshop extensions that connects to Panel",
+  "main": "lib/main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/panels/photoshop-extension"
+  },
+  "bugs": {
+    "url": "https://github.com/panels/photoshop-extension/issues"
+  },
+  "author": "Marek Hrabe <marekhrabe@abdoc.net> (https://github.com/marekhrabe)",
+  "contributors": [
+    "Marek Tomas <marektomas@abdoc.net> (https://github.com/mtomas)"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "fs-plus": "^2.2.3",
+    "glob": "^4.0.4",
+    "lodash.template": "^2.4.1",
+    "temp": "^0.8.0"
+  }
+}
