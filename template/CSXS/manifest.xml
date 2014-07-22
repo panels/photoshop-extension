@@ -55,11 +55,11 @@
                         </Size>
                     </Geometry>
                     <Icons>
-                        <Icon Type="Normal">./icons/dark.png</Icon>
-                        <Icon Type="RollOver">./icons/dark.png</Icon>
+                        <Icon Type="Normal">./icons/icon-dark.png</Icon>
+                        <Icon Type="RollOver">./icons/icon-dark.png</Icon>
 
-                        <Icon Type="DarkNormal">./icons/light.png</Icon>
-                        <Icon Type="DarkRollOver">./icons/light.png</Icon>
+                        <Icon Type="DarkNormal">./icons/icon-light.png</Icon>
+                        <Icon Type="DarkRollOver">./icons/icon-light.png</Icon>
                     </Icons>
                 </UI>
             </DispatchInfo>
