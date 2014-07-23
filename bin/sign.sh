@@ -11,7 +11,7 @@ CERT_PASSWORD="$4"
 #echo "\n"
 echo "Cleaning contents of $BUILD_DIR"
 
-#rm -R "$BUILD_DIR/"
+rm -R "$BUILD_DIR/"
 mkdir "$BUILD_DIR"
 
 java -jar './ucf.jar' -package -storetype PKCS12 -keystore "$CERT_PATH" -storepass "$CERT_PASSWORD" -tsa https://timestamp.geotrust.com/tsa "$BUILD_DIR/cc.zxp" -C "$BIN_DEBUG_DIR" .

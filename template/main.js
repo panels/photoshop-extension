@@ -23,7 +23,7 @@ var checkAuth = function() {
     iframe.onload = function() {
       var loginMessage = {
         pluginAuthId: pluginAuthId,
-        type: 'startLogin'
+        type: 'startLogin',
       }
       iframe.contentWindow.postMessage(loginMessage, '*')
     }

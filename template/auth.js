@@ -15,9 +15,10 @@ var TokenStore = function(pluginAuthId) {
         ERROR[9] = 'ERR_NOT_DIRECTORY';
         ERROR[10]= 'ERR_FILE_EXISTS';
 
+        // TODO: config dir should use package.json name identifier
         var CONFIG_DIR_PATH = new CSInterface().getSystemPath(SystemPath.USER_DATA) + '/.' + pluginAuthId + '/'
         var CONFIG_PATH  = CONFIG_DIR_PATH + '.' + pluginAuthId + '-token';
-        console.log(CONFIG_PATH)
+        console.log(path.resolve)
         self.initConfigDirectory = function() {
 
             var result = cep.fs.makedir(CONFIG_DIR_PATH);

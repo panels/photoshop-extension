@@ -83,10 +83,10 @@
 			//send message to parent window
 			var authenticationResultMessage = {
 				type: 'authenticationResult',
-				succeeded: true
+				succeeded: true,
+				token: authService.getAuthToken()
 			}
 			console.log('Auth suceeded')
-			console.log(source)
 			window.parent.postMessage(authenticationResultMessage,'*')
 
 		}
