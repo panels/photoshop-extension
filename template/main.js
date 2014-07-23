@@ -2,6 +2,7 @@ var bootstraped = false
 <% if(panel['requires-auth'] && panel['requires-auth'] === true) {%>
 var requiresAuth = true;
 var pluginAuthId = '<%= panel['plugin-auth-id'] %>'
+var authToken = null;
 <% } else  {%>
 var requiresAuth = false;
 <% } %>
@@ -13,7 +14,11 @@ var checkAuth = function() {
     window.addEventListener("message", function(event) {
     if(event.data && event.data.type === 'authenticationResult') {
       console.log('Extension successfuly authenticated, proceeding to panel')
-      setTimeout(init, 500)}}, false)
+      console.log('Passing auth token:' + event.data.token)
+      authToken = event.data.token;
+      setTimeout(init, 500)
+    }
+    }, false)
 
     iframe.onload = function() {
       var loginMessage = {
@@ -61,7 +66,7 @@ window.init = function () {
     window.__adobe_cep__.addEventListener("com.adobe.csxs.events.ThemeColorChanged", changeTheme)
     changeTheme()
   }
-  iframe.src = 'http://127.0.0.1:37379/?platform=photoshop&debug' + ((requiresAuth === true) ? '&requiresAuth' : '') + ((pluginAuthId) ? pluginAuthId : '')
+  iframe.src = 'http://127.0.0.1:37379/?platform=photoshop&debug' + ((requiresAuth === true) ? '&token=' + authToken : '') + ((pluginAuthId) ? '&pluginAuthId=' + pluginAuthId : '')
 }
 
 window.onload = checkAuth

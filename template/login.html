@@ -89,7 +89,6 @@
 			console.log(source)
 			window.parent.postMessage(authenticationResultMessage,'*')
 
-
 		}
 
 		if(authService.tokenExists()) {
@@ -109,7 +108,7 @@
 </head>
 <body class="dark">
 	<form action="#" id="login-form">
-		<!-- <img src="<%=panel.logo%>" id="plugin-logo"> -->
+		<img src="logo/extension-logo.png" id="plugin-logo">
 		<div class="sign-in-label">Sign in with your Source account</div>
 		<input class="button green" type="button" id="login-button" value="Sign in" onclick="login(window.pluginAuthId, true)"/>
 	</form>

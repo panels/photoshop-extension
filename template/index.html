@@ -3,6 +3,7 @@
 <head>
 	<title><%= panel.title %></title>
 	<link rel="stylesheet" href="main.css">
+	<% if(typeof debug !== 'undefined' && debug === true) {%>
 	<script>
 	  var isInspectOpen = function(){
       console.profile();
@@ -15,6 +16,7 @@
 	      window.__adobe_cep__.showDevTools();
 	  }
 	</script>
+	<% } %>
 	<script src="lib/CSInterface.js">
 	<script>
 	<% if(panel['requires-auth'] && panel['requires-auth'] === true) {%>
