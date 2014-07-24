@@ -2,7 +2,7 @@
 var TokenStore = function(pluginAuthId) {
 
         self = this
-        ERROR = [];
+        var ERROR = [];
         ERROR[0] = 'NO_ERROR';
         ERROR[1] = 'ERR_UNKNOWN';
         ERROR[2] = 'ERR_INVALID_PARAMS';
@@ -103,22 +103,6 @@ var AuthService = function(pluginAuthId) {
     authService.authorize = function() {
         console.log('Authorization')
 
-        //var request = new XmlHttpRequest('GET', );
-
-        // $http({
-        //     url: 'https://madebysource.com/api/check-token/' + pluginAuthId,
-        //     method: 'GET',
-        //     headers: {'Authorization': 'Bearer ' + tokenStore.getToken()}
-        // }).success(function(data, status, headers, config) {
-        //     console.log('Saved auth token OK')
-        //     authService.setAuthToken(tokenStore.getToken())
-        //     authService.successCallback(data, status, headers, config);
-        // }).error(function(data, status, headers, config) {
-        //     console.warn('Token with contents: \n' +  tokenStore.getToken() + ' is invalid, invalidating')
-        //     console.log('Invalidation result', tokenStore.invalidate());
-        //     authService.errorCallback(data, status, headers, config)
-        // })
-
         var xhr = new XMLHttpRequest()
         xhr.open('GET', 'https://madebysource.com/api/check-token/' + pluginAuthId, true)
         xhr.setRequestHeader("Authorization", 'Bearer ' + authService.getAuthToken());
@@ -140,20 +124,9 @@ var AuthService = function(pluginAuthId) {
     authService.authenticate = function() {
 
         //reset internal state
-        // authService.anonymousToken = null;
-        // authService.userData = null;
-        // authService.numberOfAttempts = 0;
-
-        // //do anonymous auth
-        // $http({url:'https://auth.firebase.com/auth/anonymous?transport=json&firebase=source', method:'GET'}).
-        // success(function(data, status, headers, config) {
-        //     authService.anonymousToken = data;
-        //     authService.authenticateAsSourceUser()
-        //     console.log(data)
-        // }).error(function(data, status, headers, config) {
-        //     //@TODO error handling
-        //     authService.errorCallback(data, status, headers, config)
-        // })
+        authService.anonymousToken = null;
+        authService.userData = null;
+        authService.numberOfAttempts = 0;
 
         var xhr = new XMLHttpRequest()
         xhr.open('GET', 'https://auth.firebase.com/auth/anonymous?transport=json&firebase=source', true)
@@ -222,28 +195,6 @@ var AuthService = function(pluginAuthId) {
             }
         }
         xhr.send()
-        // $http({url:url, method: 'GET'}).success(function(data, status, headers, config) {
-        //     if(data && data.user && data.token) {
-        //         authService.userData = data.user;
-        //         //clearInterval(authService.checkerId)
-        //         authService.setAuthToken(data.token)
-        //         if(authService.successCallback && typeof authService.successCallback === 'function') {
-        //             authService.successCallback(data, status, headers, config)
-        //         } else if(typeof successCallback !== 'function') {
-        //             console.error('authService.succesCallback is not a function')
-        //         }
-        //     } else {
-        //         authService.numberOfAttempts++;
-        //         setTimeout(authService.getAuthenticatedSourceUserData, 500)
-        //     }
-        // }).error(function(data, status, headers, config) {
-        //     if(authService.errorCallback && typeof authService.errorCallback === 'function') {
-        //         console.log('getAuthenticatedSourceUserData():', data, status, headers)
-        //         authService.errorCallback(data, status, headers, config)
-        //     } else if(typeof authService.errorCallback !== 'function') {
-        //         console.error('authService.errorCallback is not a function')
-        //     }
-        // })
     }
 
     authService.setAuthToken = function(token) {
