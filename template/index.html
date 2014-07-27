@@ -5,20 +5,21 @@
 	<link rel="stylesheet" href="main.css">
 	<% if(typeof debug !== 'undefined' && debug === true) {%>
 	<script>
-	  var isInspectOpen = function(){
+		window.debugMode = true
+
+	  var isInspectOpen = function () {
       console.profile();
       console.profileEnd();
       if (console.clear) console.clear();
       return console.profiles.length > 0;
 	  }
 
-	  if(!isInspectOpen() && window.__adobe_cep__){
+	  if (window.__adobe_cep__ && !isInspectOpen()) {
 	      window.__adobe_cep__.showDevTools();
 	  }
 	</script>
 	<% } %>
-	<script src="lib/CSInterface.js">
-	<script>
+	<script src="lib/CSInterface.js"></script>
 	<% if(panel['requires-auth'] && panel['requires-auth'] === true) {%>
 	<script src="auth.js"></script>
 	<% } %>
