@@ -16,9 +16,11 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "exec-sync": "^0.1.6",
     "fs-plus": "^2.2.3",
     "glob": "^4.0.4",
     "lodash.template": "^2.4.1",
+    "prompt": "^0.2.13",
     "temp": "^0.8.0"
   }
 }
