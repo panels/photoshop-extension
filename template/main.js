@@ -41,8 +41,15 @@ var checkAuth = function() {
       console.log('Extension successfuly authenticated, proceeding to panel')
       console.log('Passing auth token:' + event.data.token)
       authToken = event.data.token;
-      setTimeout(init, 500)
+      iframe.onload = function () {
+      window.__adobe_cep__ && window.__adobe_cep__.addEventListener("com.adobe.csxs.events.ThemeColorChanged", changeTheme)
+      document.body.classList.add('loaded')
+      changeTheme()
+      }
       iframe.src = 'http://127.0.0.1:<%= panel.port %>/?platform=photoshop&debug' + ((requiresAuth === true) ? '&token=' + authToken : '') + ((pluginAuthId) ? '&pluginAuthId=' + pluginAuthId : '')
+      if(!event.data.tokenExisted) {
+        alert('You have been successfuly logged in.')
+      }
     }
     }, false)
 
@@ -57,6 +64,7 @@ var checkAuth = function() {
   }
 }
 
+//deprecated
 window.init = function () {
   if (bootstraped) {
     return

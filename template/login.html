@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-	<title>Subtle Patterns (dev)</title>
+	<title><%= panel.title %></title>
 	<link rel="stylesheet" href="main.css">
 	<script src="lib/CSInterface.js"></script>
 	<script src="auth.js"></script>
@@ -45,6 +45,7 @@
 
 	<script>
 	var source = null
+	var tokenExisted = false
 	function receiveMessage(event)
 	{
 	  console.log(event)
@@ -60,6 +61,7 @@
 		console.log('Starting login for extension:' + pluginAuthId)
 
 		var authService = new AuthService(pluginAuthId)
+		var tokenExisted = authService.tokenExists();
 
 		authService.errorCallback = function(data, status) {
 
@@ -84,7 +86,8 @@
 			var authenticationResultMessage = {
 				type: 'authenticationResult',
 				succeeded: true,
-				token: authService.getAuthToken()
+				token: authService.getAuthToken(),
+				tokenExisted: tokenExisted
 			}
 			console.log('Auth suceeded')
 			window.parent.postMessage(authenticationResultMessage,'*')
