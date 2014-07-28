@@ -42,6 +42,7 @@ var checkAuth = function() {
       console.log('Passing auth token:' + event.data.token)
       authToken = event.data.token;
       setTimeout(init, 500)
+      iframe.src = 'http://127.0.0.1:<%= panel.port %>/?platform=photoshop&debug' + ((requiresAuth === true) ? '&token=' + authToken : '') + ((pluginAuthId) ? '&pluginAuthId=' + pluginAuthId : '')
     }
     }, false)
 
