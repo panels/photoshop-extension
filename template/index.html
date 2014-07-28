@@ -5,7 +5,7 @@
 	<link rel="stylesheet" href="main.css">
 	<% if(typeof debug !== 'undefined' && debug === true) {%>
 	<script>
-		window.debugMode = true
+	  window.debugMode = true
 
 	  var isInspectOpen = function () {
       console.profile();
@@ -20,6 +20,7 @@
 	</script>
 	<% } %>
 	<script src="lib/CSInterface.js"></script>
+	<script src="UpdateChecker.js"></script>
 	<% if(panel['requires-auth'] && panel['requires-auth'] === true) {%>
 	<script src="auth.js"></script>
 	<% } %>
