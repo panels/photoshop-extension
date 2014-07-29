@@ -1,4 +1,5 @@
 var bootstraped = false
+var appConfig = new AppConfig();
 <% if(panel['requires-auth'] && panel['requires-auth'] === true) {%>
 var requiresAuth = true;
 var pluginAuthId = '<%= panel['plugin-auth-id'] %>'
@@ -33,6 +34,16 @@ window.changeTheme = function(e) {
   iframe.contentWindow.postMessage(themeObject, '*')
 }
 
+window.sendPluginInfo = function() {
+  // pass any globally needed params, they will be attached to iframe's global context 
+  // PluginInfo object
+  var pluginInfoMessage = {
+    appVersionString: appConfig.getVersionString()
+  }
+  iframe = document.getElementById('app')
+  iframe.contentWindow.postMessage(pluginInfoMessage, '*')
+}
+
 var checkAuth = function() {
   if (requiresAuth) {
     document.body.classList.add('login')
@@ -45,6 +56,7 @@ var checkAuth = function() {
       window.__adobe_cep__ && window.__adobe_cep__.addEventListener("com.adobe.csxs.events.ThemeColorChanged", changeTheme)
       document.body.classList.add('loaded')
       changeTheme()
+      sendPluginInfo();
       }
       iframe.src = 'http://127.0.0.1:<%= panel.port %>/?platform=photoshop&debug' + ((requiresAuth === true) ? '&token=' + authToken : '') + ((pluginAuthId) ? '&pluginAuthId=' + pluginAuthId : '')
       if(!event.data.tokenExisted) {
