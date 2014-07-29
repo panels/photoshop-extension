@@ -83,6 +83,9 @@ window.init = function () {
   }
   bootstraped = true
 
+  var u = new UpdateChecker()
+  u.checkForUpdates()
+
   iframe = document.getElementById('app')
   iframe.onload = function () {
     window.__adobe_cep__ && window.__adobe_cep__.addEventListener("com.adobe.csxs.events.ThemeColorChanged", changeTheme)
