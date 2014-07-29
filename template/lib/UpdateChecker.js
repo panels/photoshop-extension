@@ -264,7 +264,9 @@ var UpdateChecker = function() {
                 var status = xhr.status
                 if (xhr.status === 200) {
                    console.log('Latest plugin version: ' + data.latest_version + ', current version: ' + appConfig.AppVersion)
-                   UpdateChecker.confirmUpdate(data.url)
+                   if(data.latest_version > appConfig.AppVersion) {
+                      UpdateChecker.confirmUpdate(data.url)
+                   }
                 } else {
                    console.warn('Error getting update check response', data, status)
                 }
