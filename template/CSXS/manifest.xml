@@ -7,8 +7,8 @@
         <HostList>
             <!-- Uncomment Host tags according to the apps you want your panel to support -->
             <!-- Photoshop -->
-            <Host Name="PHXS" Version="[14.1.2,15.9]" />
-            <Host Name="PHSP" Version="<%= panel['photoshop-target-version'].join(',') %>" />
+            <Host Name="PHXS" Version="[<%= panel['photoshop-target-version'].join(',') %>]" />
+            <Host Name="PHSP" Version="[<%= panel['photoshop-target-version'].join(',') %>]" />
             <!-- Illustrator -->
             <!-- <Host Name="ILST" Version="[17.0,17.9]" /> -->
             <!-- InDesign -->
