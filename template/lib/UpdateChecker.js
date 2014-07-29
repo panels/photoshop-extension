@@ -1,26 +1,14 @@
-  var SLUG_NAME = '<%=panel['name'] %>';
+var AppConfig = function() {
+
+  var csInterface = new CSInterface()
+  var util = new Util()
+  var SLUG_NAME = util.SLUG_NAME
+  var CONFIG_PATH = util.CONFIG_PATH
+  var CONFIG_DIR_PATH = util.CONFIG_DIR_PATH
 
   if(!SLUG_NAME) {
     throw 'Please provide panel.name property in your <yourpanel>-photoshop/package.json file'
   }
-  var csInterface = new CSInterface();
-  var CONFIG_DIR_PATH = csInterface.getSystemPath(SystemPath.USER_DATA) + '/.' + SLUG_NAME +  '/';
-  var CONFIG_PATH = csInterface.getSystemPath(SystemPath.USER_DATA) + '/.' + SLUG_NAME + '/.' + SLUG_NAME + '-config.json';
-
-var AppConfig = function() {
-
-  var ERROR = [];
-  ERROR[0] = 'NO_ERROR';
-  ERROR[1] = 'ERR_UNKNOWN';
-  ERROR[2] = 'ERR_INVALID_PARAMS';
-  ERROR[3] = 'ERR_NOT_FOUND';
-  ERROR[4] = 'ERR_CANT_READ';
-  ERROR[5] = 'ERR_UNSUPPORTED_ENCODING';
-  ERROR[6] = 'ERR_CANT_WRITE';
-  ERROR[7] = 'ERR_OUT_OF_SPACE';
-  ERROR[8] = 'ERR_NOT_FILE';
-  ERROR[9] = 'ERR_NOT_DIRECTORY';
-  ERROR[10]= 'ERR_FILE_EXISTS';
 
   var hostMajorVersion = -1;
   var hostMinorVersion = -1;
@@ -31,7 +19,7 @@ var AppConfig = function() {
   var AppConfig = {}
 
   AppConfig = {
-      AppVersion: 100,
+      AppVersion: util.EXTENSION_VERSION,
       //
       //AppVersion: 902,
       UUID: null
@@ -61,7 +49,7 @@ AppConfig.init = function() {
 
         //some other error message
     } else {
-      console.warn('Error reading config file:', ERROR[result.err]);
+      console.warn('Error reading config file:', util.getErrorMessage(result.err));
   }
 }
 
@@ -122,7 +110,7 @@ AppConfig.getUUID = function() {
 }
 
 AppConfig.getBuildVersion = function() {
-  
+
   var version = Math.floor(AppConfig.AppVersion / 10000)
   var mili_version = Math.floor(AppConfig.AppVersion / 100) % 100
   var micro_version = Math.floor(AppConfig.AppVersion) % 100
@@ -215,7 +203,10 @@ return AppConfig
 
 var UpdateChecker = function() {
 
-    var appConfig = new AppConfig();
+    var appConfig = new AppConfig()
+    var util = new Util()
+    var SLUG_NAME = util.SLUG_NAME
+
     appConfig.init()
 
     var csInterface = new CSInterface();
@@ -263,6 +254,7 @@ var UpdateChecker = function() {
         console.log('Checking updates, payload:', payload)
         var xhr = new XMLHttpRequest()
         xhr.open('POST', UpdateChecker.UPDATE_URL, true)
+        xhr.setRequestHeader("Content-type","application/json");
         xhr.timeout = 10000;
         xhr.ontimeout = function () { console.warn('Update request timed out, proceeding...')}
         //xhr.setRequestHeader("Authorization", 'Bearer ' + authService.getAuthToken());

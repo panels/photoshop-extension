@@ -24,13 +24,15 @@ var poll = function () {
 }
 
 window.changeTheme = function(e) {
-  var skinInfo = JSON.parse(window.__adobe_cep__.getHostEnvironment()).appSkinInfo;
+
+  var skinInfo = JSON.parse(window.__adobe_cep__.getHostEnvironment()).appSkinInfo
+  //also change current window theme
+
   var themeObject = {
     type:'themeChange',
     theme:'dark',
     skinInfo: skinInfo
   }
-
   iframe.contentWindow.postMessage(themeObject, '*')
 }
 
@@ -38,7 +40,8 @@ window.sendPluginInfo = function() {
   // pass any globally needed params, they will be attached to iframe's global context 
   // PluginInfo object
   var pluginInfoMessage = {
-    appVersionString: appConfig.getVersionString()
+    appVersionString: appConfig.getVersionString(),
+    authToken: authToken
   }
   iframe = document.getElementById('app')
   iframe.contentWindow.postMessage(pluginInfoMessage, '*')
@@ -53,10 +56,10 @@ var checkAuth = function() {
       console.log('Passing auth token:' + event.data.token)
       authToken = event.data.token;
       iframe.onload = function () {
-      window.__adobe_cep__ && window.__adobe_cep__.addEventListener("com.adobe.csxs.events.ThemeColorChanged", changeTheme)
-      document.body.classList.add('loaded')
-      changeTheme()
-      sendPluginInfo();
+        window.__adobe_cep__ && window.__adobe_cep__.addEventListener("com.adobe.csxs.events.ThemeColorChanged", changeTheme)
+        document.body.classList.add('loaded')
+        changeTheme()
+        sendPluginInfo();
       }
       iframe.src = 'http://127.0.0.1:<%= panel.port %>/?platform=photoshop&debug' + ((requiresAuth === true) ? '&token=' + authToken : '') + ((pluginAuthId) ? '&pluginAuthId=' + pluginAuthId : '')
       if(!event.data.tokenExisted) {
@@ -66,6 +69,7 @@ var checkAuth = function() {
     }, false)
 
     iframe.onload = function() {
+      changeTheme()
       var loginMessage = {
         pluginAuthId: pluginAuthId,
         type: 'startLogin',
@@ -83,6 +87,10 @@ window.init = function () {
   }
   bootstraped = true
 
+  //listen to theme changes
+  window.__adobe_cep__ && window.__adobe_cep__.addEventListener("com.adobe.csxs.events.ThemeColorChanged", changeTheme)
+
+  //initialize and run update check, fail silently with log warn in case of any error
   var u = new UpdateChecker()
   u.checkForUpdates()
 

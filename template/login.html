@@ -1,9 +1,10 @@
 <!doctype html>
 <html>
 <head>
-	<title><%= panel.title %></title>
+	<title>Subtle Patterns (dev)</title>
 	<link rel="stylesheet" href="main.css">
 	<script src="lib/CSInterface.js"></script>
+	<script src="lib/ThemeManager.js"></script>
 	<script src="auth.js"></script>
 	<style>
 
@@ -48,11 +49,16 @@
 	var tokenExisted = false
 	function receiveMessage(event)
 	{
-	  console.log(event)
+	  console.log('Received message from parent window:', event)
 	  source = event.source
 	  if(event.data && event.data.type === 'startLogin') {
 	  	window.pluginAuthId = event.data.pluginAuthId
 	  	login(pluginAuthId)
+	  }
+
+	  if(event.data && event.data.type === 'themeChange') {
+	  	var themeManager = new ThemeManager()
+  		themeManager.handleThemeChange(event.data.skinInfo)
 	  }
 	}
 
@@ -94,12 +100,16 @@
 
 		}
 
+		var loginButton = document.getElementById('login-button')
+
 		if(authService.tokenExists()) {
 			console.log('Checking existing token', authService.getAuthToken())
+			loginButton.value = 'Signing in..'
 			authService.authorize()
 		} else {
-			if(doAuth === true) {
+			if(true === doAuth) {
 				console.log('Starting auth, trying to get auth token')
+				loginButton.value = 'Opening browser..'
 				authService.authenticate()
 			}
 		}

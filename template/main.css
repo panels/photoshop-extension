@@ -34,3 +34,13 @@ iframe {
   display: none;
 }
 
+body.dark.skin-0 {
+	background-color: #2e2e2e !important;
+}
+
+body.light .skin-3 {
+	background-color: #d1d1d1 !important;
+}
+
+
+
