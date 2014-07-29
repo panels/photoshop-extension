@@ -19,6 +19,9 @@ var ThemeManager = function() {
     }
 
     this.handleThemeChange = function(skinInfo) {
+      if(!skinInfo) {
+        throw 'Please provide skinInfo instance as parameter'
+      }
       console.log('Firing handle theme change')
       function toHex(color, delta) {
           function computeValue(value, delta) {

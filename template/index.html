@@ -27,6 +27,7 @@
 	<script src="auth.js"></script>
 	<% } %>
 	<script src="main.js"></script>
+
 </head>
 <body>
 	<div id="loader">
@@ -34,5 +35,10 @@
 		<h2><%= version %></h2>
 	</div>
 	<iframe id="app"></iframe>
+	<script>
+	var skinInfo = JSON.parse(window.__adobe_cep__.getHostEnvironment()).appSkinInfo
+	var themeManager = new ThemeManager()
+	themeManager.handleThemeChange(skinInfo)
+	</script>
 </body>
 </html>
