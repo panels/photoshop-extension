@@ -1,44 +1,26 @@
 <!doctype html>
 <html>
 <head>
+	<meta charset="utf-8">
 	<title><%= panel.title %></title>
 	<link rel="stylesheet" href="main.css">
-	<% if(typeof debug !== 'undefined' && debug === true) {%>
-	<script>
-	  window.debugMode = true
-
-	  var isInspectOpen = function () {
-      console.profile();
-      console.profileEnd();
-      if (console.clear) console.clear();
-      return console.profiles.length > 0;
-	  }
-
-	  if (window.__adobe_cep__ && !isInspectOpen()) {
-	      window.__adobe_cep__.showDevTools();
-	  }
-	</script>
-	<% } %>
 	<script src="lib/CSInterface.js"></script>
 	<script src="lib/Util.js"></script>
 	<script src="lib/ThemeManager.js"></script>
-	<script src="lib/UpdateChecker.js"></script>
-	<% if(panel['requires-auth'] && panel['requires-auth'] === true) {%>
-	<script src="auth.js"></script>
-	<% } %>
+	<% if(panel['update-checker'] && panel['update-checker'] === true) {%><script src="lib/UpdateChecker.js"></script><% } %>
+	<% if(panel['requires-auth'] && panel['requires-auth'] === true) {%><script src="auth.js"></script><% } %>
 	<script src="main.js"></script>
-
 </head>
 <body>
 	<div id="loader">
 		<h1>Loading <%= panel.title %></h1>
 		<h2><%= version %></h2>
 	</div>
-	<iframe id="app"></iframe>
-	<script>
-	var skinInfo = JSON.parse(window.__adobe_cep__.getHostEnvironment()).appSkinInfo
-	var themeManager = new ThemeManager()
-	themeManager.handleThemeChange(skinInfo)
-	</script>
+	<% if(panel['requires-auth'] && panel['requires-auth'] === true) {%><div id="login">
+		<img src="logo/extension-logo.png" id="plugin-logo">
+		<div class="sign-in-label">Sign in with your Source account</div>
+		<button class="green" id="login-button">Sign in</button>
+	</div><% } %>
+	<iframe id="app" allowTransparency="true"></iframe>
 </body>
 </html>

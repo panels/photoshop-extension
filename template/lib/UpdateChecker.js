@@ -6,10 +6,6 @@ var AppConfig = function() {
   var CONFIG_PATH = util.CONFIG_PATH
   var CONFIG_DIR_PATH = util.CONFIG_DIR_PATH
 
-  if(!SLUG_NAME) {
-    throw 'Please provide panel.name property in your <yourpanel>-photoshop/package.json file'
-  }
-
   var hostMajorVersion = -1;
   var hostMinorVersion = -1;
   var hostFixVersion   = -1;
@@ -161,7 +157,7 @@ AppConfig.getVersionString = function() {
     else
     {
       _os += "U"; // unknown
-    } 
+    }
   }
   name.push(_os + "." + AppConfig.getHostVersion())
 
@@ -224,22 +220,7 @@ var UpdateChecker = function() {
 
     UpdateChecker.UPDATE_URL = 'https://madebysource.com/api/update/' + SLUG_NAME + '/v1/?channel=' + CurrentChannel;
 
-    UpdateChecker.openBrowser = function(url) {
-        var rootDir = "/";
-        var isWindows = window.navigator.platform.toLowerCase().indexOf("win") > -1;
-        if (isWindows) {
-            rootDir = csInterface.getSystemPath(SystemPath.COMMON_FILES).substring(0, 3);
-        }
-        var processPath = "/usr/bin/open";
-
-        if (isWindows) {
-            processPath = rootDir + "Windows/explorer.exe";
-        }
-
-        var proc = window.cep.process.createProcess(processPath, url);
-
-        return proc;
-    }
+    UpdateChecker.openBrowser = window.cs.openURLInDefaultBrowser
 
     UpdateChecker.checkForUpdates = function() {
 

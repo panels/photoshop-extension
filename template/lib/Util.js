@@ -1,19 +1,12 @@
 var Util = function() {
-
-	  var csInterface = new CSInterface()
-
 	  var util = {}
+	  var SLUG_NAME = util.SLUG_NAME = '<%=panel['sourceProductID'] %>'
 
-	  var SLUG_NAME = util.SLUG_NAME = '<%=panel['name'] %>'
-
-    util.EXTENSION_VERSION = '<%=panel['extension-version'] %>'
-
-	  util.CONFIG_DIR_PATH = csInterface.getSystemPath(SystemPath.USER_DATA) + '/.' + SLUG_NAME +  '/';
-
-    util.CONFIG_PATH = csInterface.getSystemPath(SystemPath.USER_DATA) + '/.' + SLUG_NAME + '/.' + SLUG_NAME + '-config.json';
+    util.EXTENSION_VERSION = '<%=panel['extensionVersion'] %>'
+	  util.CONFIG_DIR_PATH = window.cs.getSystemPath(SystemPath.USER_DATA) + '/.' + SLUG_NAME +  '/';
+    util.CONFIG_PATH = window.cs.getSystemPath(SystemPath.USER_DATA) + '/.' + SLUG_NAME + '/.' + SLUG_NAME + '-config.json';
 
     util.getErrorMessage = function(ERR_NUMBER) {
-
     	var ERROR = []
 
   		ERROR[0] = 'NO_ERROR'
