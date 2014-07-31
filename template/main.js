@@ -104,7 +104,7 @@ var checkAuth = function() {
 var startPanel = function () {
   document.body.classList.remove('login')
 
-  var url = 'http://127.0.0.1:<%= panel.port %>/?platform=photoshop&version=' + appConfig.getVersionString()
+  var url = 'http://127.0.0.1:<%= panel.port %>/panel/?platform=photoshop&version=' + appConfig.getVersionString()
 
   if (requiresAuth === true) {
     url += '&token=' + authToken
