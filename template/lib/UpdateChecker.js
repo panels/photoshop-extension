@@ -9,7 +9,7 @@ var AppConfig = function() {
   var hostMajorVersion = -1;
   var hostMinorVersion = -1;
   var hostFixVersion   = -1;
-  var debugMode = true;
+  var debugMode = <%= typeof debug !== 'undefined' && debug === true ? 'true' : 'false' %>;
   var os = ""
 
   var AppConfig = {}
