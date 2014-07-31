@@ -55,6 +55,19 @@ iframe {
   z-index: 100;
 }
 
+#login-button {
+  font-size: 12px;
+  padding: 0 15px;
+  line-height: 32px;
+  display: block;
+  margin: 10px auto;
+}
+
+#plugin-logo {
+  display: block;
+  margin: 0 auto;
+}
+
 .loaded #loader, .login #loader  {
   display: none;
 }

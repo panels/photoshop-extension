@@ -17,9 +17,8 @@
 		<h2><%= version %></h2>
 	</div>
 	<% if(panel['requires-auth'] && panel['requires-auth'] === true) {%><div id="login">
-		<img src="logo/extension-logo.png" id="plugin-logo">
-		<div class="sign-in-label">Sign in with your Source account</div>
-		<button class="green" id="login-button">Sign in</button>
+		<img src="logo/extension-logo.png" id="plugin-logo" style="<%= panel.logoStyle || '' %>">
+		<button class="green" id="login-button">Sign in with your Source account</button>
 	</div><% } %>
 	<iframe id="app" allowTransparency="true"></iframe>
 </body>
