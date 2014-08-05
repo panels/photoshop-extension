@@ -149,3 +149,9 @@ window.init = function () {
 window.__adobe_cep__ && window.__adobe_cep__.addEventListener('com.adobe.csxs.events.ThemeColorChanged', changeTheme)
 window.addEventListener('load', changeTheme, false)
 window.addEventListener('load', poll, false)
+
+<% if (typeof debug !== 'undefined' && debug === true) { %>
+var e = new CSEvent('com.adobe.PhotoshopPersistent', 'APPLICATION')
+e.extensionId = '<%= panel.identifier %>'
+cs.dispatchEvent(e)
+<% } %>
