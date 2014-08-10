@@ -42,7 +42,7 @@ var UpdateChecker = function() {
         //xhr.setRequestHeader("Authorization", 'Bearer ' + authService.getAuthToken());
         xhr.onreadystatechange = function (oEvent) {
             if (xhr.readyState === 4) {
-              vat data;
+                var data;
                 try {
                   data = JSON.parse(xhr.responseText)
                 } catch (e) {}
