@@ -150,7 +150,7 @@ window.__adobe_cep__ && window.__adobe_cep__.addEventListener('com.adobe.csxs.ev
 window.addEventListener('load', changeTheme, false)
 window.addEventListener('load', poll, false)
 
-<% if (typeof debug !== 'undefined' && debug === true) { %>
+<% if (typeof debug === 'undefined' || debug === false) { %>
 var e = new CSEvent('com.adobe.PhotoshopPersistent', 'APPLICATION')
 e.extensionId = '<%= panel.identifier %>'
 cs.dispatchEvent(e)

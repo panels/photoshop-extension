@@ -1,7 +1,7 @@
 var AppConfig = function() {
 
   var csInterface = new CSInterface()
-  var util = new Util()
+  window.util = new Util()
   var SLUG_NAME = util.SLUG_NAME
   var CONFIG_PATH = util.CONFIG_PATH
   var CONFIG_DIR_PATH = util.CONFIG_DIR_PATH
@@ -54,7 +54,7 @@ AppConfig.initConfigDirectory = function() {
   var result = cep.fs.makedir(CONFIG_DIR_PATH);
 
   if(result.err !== cep.fs.NO_ERROR && (result.err !== cep.fs.ERR_NOT_FOUND)) {
-    console.warn('Error creating app config directory: Problem reading app config dir (' + CONFIG_DIR_PATH + '): ' + ERROR[result.err]);
+    console.warn('Error creating app config directory: Problem reading app config dir (' + CONFIG_DIR_PATH + '): ' + util.getErrorMessage(result.err));
   } else if(result.err === cep.fs.ERR_NOT_FOUND) {
     console.log('Config dir already exists, proceeding..');
   } else {

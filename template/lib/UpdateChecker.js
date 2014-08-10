@@ -42,15 +42,17 @@ var UpdateChecker = function() {
         //xhr.setRequestHeader("Authorization", 'Bearer ' + authService.getAuthToken());
         xhr.onreadystatechange = function (oEvent) {
             if (xhr.readyState === 4) {
-                var data = JSON.parse(xhr.responseText)
-                var status = xhr.status
-                if (xhr.status === 200) {
+              vat data;
+                try {
+                  data = JSON.parse(xhr.responseText)
+                } catch (e) {}
+                if (xhr.status === 200 && data) {
                    console.log('Latest plugin version: ' + data.latest_version + ', current version: ' + appConfig.AppVersion)
                    if(data.latest_version > appConfig.AppVersion) {
                       UpdateChecker.confirmUpdate(data.url)
                    }
                 } else {
-                   console.warn('Error getting update check response', data, status)
+                   console.warn('Error getting update check response', data, xhr.status)
                 }
             }
         }
@@ -58,7 +60,7 @@ var UpdateChecker = function() {
     }
 
     UpdateChecker.confirmUpdate = function(url) {
-      var script = "confirm('New version of extension is available. Do you want to download it ?')"
+      var script = "confirm('New version of extension is available. Do you want to download it?')"
       csInterface.evalScript(script, function(result) {
         if(result === 'true') {
           UpdateChecker.openBrowser(url);
