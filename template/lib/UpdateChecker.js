@@ -8,18 +8,9 @@ var UpdateChecker = function() {
 
     var csInterface = new CSInterface();
 
-    // update channels enum
-    var CHANNEL = {
-      BETA: 'beta',
-      STABLE: 'stable',
-      INTERNAL: 'internal'
-    }
-
-    var CurrentChannel = CHANNEL.STABLE;
-
     var UpdateChecker = {};
 
-    UpdateChecker.UPDATE_URL = 'https://madebysource.com/api/update/' + SLUG_NAME + '/v1/?channel=' + CurrentChannel;
+    UpdateChecker.UPDATE_URL = 'https://madebysource.com/api/update/' + SLUG_NAME + '/v1/';
 
     UpdateChecker.openBrowser = window.cs.openURLInDefaultBrowser
 
@@ -31,7 +22,7 @@ var UpdateChecker = function() {
             "os_version": csInterface.getOSInformation(),
             "photoshop_version": csInterface.hostEnvironment.appVersion,
             "events": [], //TODO hook event tracking mechanism
-            "channel": CHANNEL.STABLE
+            "channel": '<%= panel.sourceChannel || 'stable' %>'
         }
         console.log('Checking updates, payload:', payload)
         var xhr = new XMLHttpRequest()
