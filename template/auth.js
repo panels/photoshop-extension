@@ -145,7 +145,8 @@ AuthService.prototype.getAuthenticatedSourceUserData = function () {
         self.authenticated = true
 
         var status = xhr.status
-        self.successCallback(data, status)
+        self.authorize()
+        // self.successCallback(data, status) will be called by success of authorize
       } else {
         if (!self.authenticated) {
           self.numberOfAttempts++;
