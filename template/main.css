@@ -126,12 +126,13 @@ small.version {
 * Loaded
 */
 
-.loaded #loader {
+.loaded #loader,
+.login #loader {
   display: none;
 }
 
 .login #login {
-  display: block;
+  display: -webkit-flex;
 }
 
 .loaded iframe {

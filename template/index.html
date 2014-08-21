@@ -21,13 +21,13 @@
 		</div>
 	</div>
 	<% if(panel['requires-auth'] && panel['requires-auth'] === true) {%><div id="login">
-			<div class="container">
-				<img src="logo/extension-logo.png" id="plugin-logo" style="<%= panel.logoStyle || '' %>">
-				<h3>Welcome to <%= panel.title %></h3>
-				<hr>
-				<button class="green" id="login-button">Sign in with your Source account</button>
-				<small class="version">Version <%= version %></small>
-			</div>
+		<div class="container">
+			<img src="logo/extension-logo.png" id="plugin-logo" style="<%= panel.logoStyle || '' %>">
+			<h3>Welcome to <%= panel.title %></h3>
+			<hr>
+			<button class="green" id="login-button">Sign in with your Source account</button>
+			<small class="version">Version <%= version %></small>
+		</div>
 	</div><% } %>
 	<iframe id="app" allowTransparency="true"></iframe>
 </body>
