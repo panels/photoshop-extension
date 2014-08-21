@@ -3,6 +3,9 @@
   "version": "2.2.4",
   "description": "Generator for Photoshop extensions that connect to Panel",
   "main": "lib/main.js",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/panels/photoshop-extension"
