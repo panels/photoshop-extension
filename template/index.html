@@ -14,12 +14,18 @@
 </head>
 <body>
 	<div id="loader">
-		<h1>Loading <%= panel.title %></h1>
-		<h2><%= version %></h2>
+		<div class="container">
+			<div class="loading-animation"></div>
+			<h2>Loading <%= panel.title %></h2>
+			<small class="version">Version <%= version %></small>
+		</div>
 	</div>
 	<% if(panel['requires-auth'] && panel['requires-auth'] === true) {%><div id="login">
 		<img src="logo/extension-logo.png" id="plugin-logo" style="<%= panel.logoStyle || '' %>">
-		<button class="green" id="login-button">Sign in with your Source account</button>
+			<h3>Welcome to <%= panel.title %></h3>
+			<hr>
+			<button class="green" id="login-button">Sign in with your Source account</button>
+			<small class="version">Version <%= version %></small>
 	</div><% } %>
 	<iframe id="app" allowTransparency="true"></iframe>
 </body>
