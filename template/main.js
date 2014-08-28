@@ -62,23 +62,36 @@ window.sendPluginInfo = function() {
   // iframe.contentWindow.postMessage(pluginInfoMessage, '*')
 }
 
+var loginCallback = false
+var showLogin = function (authService) {
+  document.getElementById('login-button').innerHTML = 'Sign in with your Source account'
+  document.body.classList.add('login')
+  if (!loginCallback) {
+    document.getElementById('login-button').addEventListener('click', function (e) {
+      e.target.innerHTML = 'Please wait…'
+      authService.authenticate()
+      return false
+    })
+  }
+}
+
 var checkAuth = function() {
   var authService = new AuthService(pluginAuthId)
 
   authService.errorCallback = function(data, status) {
     if (status == 400 || status === 401 || status === 403) {
       console.log('Using expired or invalid token, should be invalidated')
-      console.log('Invalidation result', TokenStore.invalidate());
+      console.log('Invalidation result', authService.tokenStore.invalidate());
     } else if (status == 0) {
       if (!navigator.onLine) {
-        alert('This extension needs internet connection for full functionality. Please check your internet connection and try again.');
+        alert('This extension needs internet connection for full functionality. Please check your internet connection and try again.\n\nSorry for that, offline version is high on our priority list.');
       }
     } else {
       alert('Unexpected error: ' + data  + 'Status:' + status + ' Please try again later. If problem persist, contact our support at team@madebysource.com')
     }
 
     if (status === 400 || status === 401 || status === 403) {
-      authService.authenticate();
+      showLogin(authService)
     }
   }
 
@@ -92,12 +105,7 @@ var checkAuth = function() {
     console.log('Checking existing token', authService.tokenStore.getToken())
     authService.authorize()
   } else {
-    document.body.classList.add('login')
-    document.getElementById('login-button').addEventListener('click', function (e) {
-      e.target.innerHTML = 'Please wait…'
-      authService.authenticate()
-      return false
-    })
+    showLogin(authService)
   }
 }
 
