@@ -163,3 +163,8 @@ AuthService.prototype.getAuthenticatedSourceUserData = function () {
 AuthService.prototype.tokenExists = function () {
   return !!this.tokenStore.getToken()
 }
+
+AuthService.prototype.logout = function () {
+  this.tokenStore.invalidate()
+  window.location.reload()
+}
