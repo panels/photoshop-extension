@@ -20,7 +20,9 @@
             <DispatchInfo >
                 <Resources>
                     <MainPath>./index.html</MainPath>
-                    <!-- <ScriptPath>./jsx/hostscript.jsx</ScriptPath> -->
+                    <% if(panel['requires-auth'] && panel['requires-auth'] === true) {%>
+                    <ScriptPath><%= panel.extensionJsxPath %></ScriptPath>
+                    <% } %>
                 </Resources>
                 <Lifecycle>
                     <AutoVisible>true</AutoVisible>
