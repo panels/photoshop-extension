@@ -20,7 +20,7 @@
             <DispatchInfo >
                 <Resources>
                     <MainPath>./index.html</MainPath>
-                    <% if(panel['requires-auth'] && panel['requires-auth'] === true) {%>
+                    <% if(panel['extensionJsxPath'] !== undefined) {%>
                     <ScriptPath><%= panel.extensionJsxPath %></ScriptPath>
                     <% } %>
                 </Resources>
