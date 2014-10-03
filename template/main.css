@@ -12,6 +12,10 @@ body {
   font-size: 11px;
 }
 
+.os-windows * {
+  font-family: Arial !important;
+}
+
 body,
 #loader,
 #login,

@@ -3,6 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<title><%= panel.title %></title>
+	<script>document.documentElement.classList.add(navigator.platform.toLowerCase().indexOf('mac') !== -1 ? 'os-darwin' : 'os-windows')</script>
 	<link rel="stylesheet" href="main.css">
 	<script src="lib/CSInterface.js"></script>
 	<script src="lib/Util.js"></script>
