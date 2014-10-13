@@ -7,12 +7,12 @@
 	<link rel="stylesheet" href="main.css">
 	<script src="lib/CSInterface.js"></script>
 	<script src="lib/ThemeManager.js"></script>
-	<% if((panel['update-checker'] && panel['update-checker'] === true) || (panel['requires-auth'] && panel['requires-auth'] === true)) {%>
+	<% if (panel.madebysource) {%>
 	<script src="lib/Util.js"></script>
 	<script src="lib/AppConfig.js"></script>
 	<% } %>
-	<% if(panel['update-checker'] && panel['update-checker'] === true) {%><script src="lib/UpdateChecker.js"></script><% } %>
-	<% if(panel['requires-auth'] && panel['requires-auth'] === true) {%><script src="auth.js"></script><% } %>
+	<% if (panel.madebysource.updateCheck === true) {%><script src="lib/UpdateChecker.js"></script><% } %>
+	<% if (panel.madebysource.requiresAuth === true) {%><script src="auth.js"></script><% } %>
 	<script src="main.js"></script>
 </head>
 <body>
@@ -23,12 +23,12 @@
 			<small class="version">Version <%= version %></small>
 		</div>
 	</div>
-	<% if(panel['requires-auth'] && panel['requires-auth'] === true) {%><div id="login">
+	<% if (panel.madebysource && panel.madebysource.requiresAuth === true) {%><div id="login">
 		<div class="container">
-			<img src="logo/extension-logo.png" id="plugin-logo" style="<%= panel.logoStyle || '' %>">
+			<img src="logo/extension-logo.png" id="plugin-logo" style="<%= panel.logo.style || '' %>">
 			<h3>Welcome to <%= panel.title %></h3>
 			<hr>
-			<button class="green" id="login-button">Sign in with your Source account</button>
+			<button class="green" id="login-button"></button>
 			<small class="version">Version <%= version %></small>
 		</div>
 	</div><% } %>

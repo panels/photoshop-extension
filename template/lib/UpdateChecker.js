@@ -6,8 +6,6 @@ var UpdateChecker = function() {
 
     appConfig.init()
 
-    var csInterface = new CSInterface();
-
     var UpdateChecker = {};
 
     UpdateChecker.UPDATE_URL = 'https://madebysource.com/api/update/' + SLUG_NAME + '/v1/';
@@ -19,8 +17,8 @@ var UpdateChecker = function() {
         var payload = {
             "plugin_version": appConfig.getPluginVersion(),
             "uuid": appConfig.getUUID(),
-            "os_version": csInterface.getOSInformation(),
-            "photoshop_version": csInterface.hostEnvironment.appVersion,
+            "os_version": cs.getOSInformation(),
+            "photoshop_version": cs.hostEnvironment.appVersion,
             "events": [], //TODO hook event tracking mechanism
             "channel": '<%= panel.sourceChannel || 'stable' %>'
         }
@@ -52,7 +50,7 @@ var UpdateChecker = function() {
 
     UpdateChecker.confirmUpdate = function(url) {
       var script = "confirm('New version of extension is available. Do you want to download it?')"
-      csInterface.evalScript(script, function(result) {
+      cs.evalScript(script, function(result) {
         if(result === 'true') {
           UpdateChecker.openBrowser(url);
         } else {

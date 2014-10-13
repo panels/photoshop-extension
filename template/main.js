@@ -2,14 +2,50 @@ window.cs = new CSInterface()
 var bootstraped = false
 var appConfig = new AppConfig()
 
-<% if(panel['requires-auth'] && panel['requires-auth'] === true) {%>
+<% if (panel.madebysource && panel.madebysource.requiresAuth && panel.madebysource.requiresAuth === true) { %>
 var requiresAuth = true
-var pluginAuthId = '<%= panel['sourceProductID'] %>'
+var pluginAuthId = '<%= panel.madebysource.id %>'
 var authToken = null
-<% } else  {%>
+<% } else { %>
 var requiresAuth = false
 var pluginAuthId = null
 var authToken = null
+<% } %>
+
+var devMode = false
+<% if (typeof debug !== 'undefined' && debug === true) { %>
+if (window.localStorage.devMode === undefined) {
+  window.localStorage.devMode = 'production'
+}
+devMode = window.localStorage.devMode
+
+// dev
+if (cs.getHostCapabilities().EXTENDED_PANEL_MENU) {
+  menuString = '<Menu>\
+    <MenuItem Id="devtools" Label="Open DevTools" Enabled="true" Checked="false" />'
+
+  <% if (panel.madebysource && panel.madebysource.requiresAuth === true) { %>
+  menuString += '\
+    <MenuItem Label="---" />\
+    <MenuItem Id="devModeProduction" Label="Production" Enabled="true" Checked="' + Boolean(devMode === 'production') + '" />\
+    <MenuItem Id="devModeStaging" Label="Staging" Enabled="true" Checked="' + Boolean(devMode === 'staging') + '" />'
+  <% } %>
+
+  menuString += '</Menu>'
+
+  console.log(menuString)
+  cs.setPanelFlyoutMenu(menuString)
+  cs.addEventListener('com.adobe.csxs.events.flyoutMenuClicked', function (e) {
+    if (e.data.menuId === 'devModeStaging' || e.data.menuId === 'devModeProduction') {
+      window.localStorage.devMode = e.data.menuName.toLowerCase()
+      setTimeout(function () {
+        window.location.reload()
+      })
+    } else if (e.data.menuId === 'devtools') {
+      cs.openURLInDefaultBrowser('http://127.0.0.1:' + <%= panel.debugPort %> + '/')
+    }
+  })
+}
 <% } %>
 
 var iframe = null
@@ -53,7 +89,7 @@ window.changeTheme = function (e) {
 
 var loginCallback = false
 var showLogin = function (authService) {
-  document.getElementById('login-button').innerHTML = 'Sign in with your Source account'
+  document.getElementById('login-button').innerHTML = 'Sign in with your Source ' + (devMode === 'staging' ? 'Staging ' : '') + 'account'
   document.body.classList.add('login')
   if (!loginCallback) {
     document.getElementById('login-button').addEventListener('click', function (e) {
@@ -65,7 +101,7 @@ var showLogin = function (authService) {
 }
 
 var checkAuth = function() {
-  var authService = new AuthService(pluginAuthId)
+  window.authService = new AuthService(pluginAuthId, devMode)
 
   authService.errorCallback = function(data, status) {
     if (status == 400 || status === 401 || status === 403) {
@@ -111,6 +147,10 @@ var startPanel = function () {
     url += '&pluginAuthId=' + pluginAuthId
   }
 
+  if (devMode) {
+    url += '&devMode=' + devMode
+  }
+
   if (<%= typeof debug !== 'undefined' && debug ? 'true' : 'false' %>) {
     url += '&debug'
   }
@@ -124,7 +164,7 @@ window.init = function () {
   }
   bootstraped = true
 
-  <% if(panel['update-checker'] && panel['update-checker'] === true) {%>
+  <% if (panel['madebysource'] && panel.madebysource.updateCheck && panel.madebysource.updateCheck === true) {%>
   //initialize and run update check, fail silently with log warn in case of any error
   var updates = new UpdateChecker()
   updates.checkForUpdates()
@@ -149,8 +189,7 @@ window.addEventListener('load', poll, false)
 
 window.addEventListener('message', function (e) {
   if (e.data === 'logout') {
-    var authService = new AuthService(pluginAuthId)
-    authService.logout()
+    window.authService.logout()
     setTimeout(function () {
       window.location.reload()
     })

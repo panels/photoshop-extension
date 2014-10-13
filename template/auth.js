@@ -12,10 +12,12 @@ var FS_ERRORS = {
   '10':'ERR_FILE_EXISTS',
 }
 
-var TokenStore = function (pluginAuthId) {
+var TokenStore = function (pluginAuthId, devMode) {
+  var util = new Util(devMode);
+
   this.pluginAuthId = pluginAuthId
-  this.configDirPath = cs.getSystemPath(SystemPath.USER_DATA) + '/.' + this.pluginAuthId + '/'
-  this.configPath = this.configDirPath + '.' + this.pluginAuthId + '-token';
+  this.configDirPath = util.CONFIG_DIR_PATH
+  this.tokenPath = util.TOKEN_PATH
 
   var directoryCreation = cep.fs.makedir(this.configDirPath);
   console.log('Config directory check result:', directoryCreation)
@@ -29,7 +31,7 @@ var TokenStore = function (pluginAuthId) {
 };
 
 TokenStore.prototype.saveToken = function(token) {
-  var result = cep.fs.writeFile(this.configPath, token)
+  var result = cep.fs.writeFile(this.tokenPath, token)
 
   if(result.err === cep.fs.NO_ERROR) {
     return result.data;
@@ -40,7 +42,7 @@ TokenStore.prototype.saveToken = function(token) {
 }
 
 TokenStore.prototype.getToken = function(token) {
-  var result = cep.fs.readFile(this.configPath)
+  var result = cep.fs.readFile(this.tokenPath)
 
   if(result.err === cep.fs.ERR_NOT_FOUND) {
     return null;
@@ -53,16 +55,25 @@ TokenStore.prototype.getToken = function(token) {
 }
 
 TokenStore.prototype.invalidate = function() {
-  return cep.fs.deleteFile(this.configPath);
+  return cep.fs.deleteFile(this.tokenPath);
 }
 
-var AuthService = function (pluginAuthId) {
-  this.tokenStore = new TokenStore(pluginAuthId)
+var AuthService = function (pluginAuthId, devMode) {
+  this.tokenStore = new TokenStore(pluginAuthId, devMode)
 
   this.anonymousToken = null;
   this.userData = null;
   this.numberOfAttempts = 0;
   this.authenticated = false;
+
+  this.devMode = devMode
+  this.firebase = 'source'
+  this.source = 'https://madebysource.com'
+
+  if (devMode && devMode === 'staging') {
+    this.firebase = 'source-staging'
+    this.source = 'https://staging.madebysource.com'
+  }
 }
 
 AuthService.prototype.authorize = function () {
@@ -70,7 +81,7 @@ AuthService.prototype.authorize = function () {
   var self = this
 
   var xhr = new XMLHttpRequest()
-  xhr.open('GET', 'https://madebysource.com/api/check-token/' + pluginAuthId, true)
+  xhr.open('GET', this.source + '/api/check-token/' + pluginAuthId, true)
   xhr.setRequestHeader("Authorization", 'Bearer ' + this.tokenStore.getToken())
   xhr.onreadystatechange = function (oEvent) {
     if (xhr.readyState === 4) {
@@ -95,7 +106,7 @@ AuthService.prototype.authenticate = function () {
   var self = this
 
   var xhr = new XMLHttpRequest()
-  xhr.open('GET', 'https://auth.firebase.com/auth/anonymous?transport=json&firebase=source', true)
+  xhr.open('GET', 'https://auth.firebase.com/auth/anonymous?transport=json&firebase=' + this.firebase, true)
   xhr.onreadystatechange = function (oEvent) {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
@@ -111,7 +122,7 @@ AuthService.prototype.authenticate = function () {
 
 AuthService.prototype.authenticateAsSourceUser = function () {
   console.log(this.anonymousToken)
-  var url = 'https://madebysource.com/external-login/' + pluginAuthId + '/?key=' + this.anonymousToken.user.id;
+  var url = this.source + '/external-login/' + pluginAuthId + '/?key=' + this.anonymousToken.user.id;
   cs.openURLInDefaultBrowser(url)
   self = this
   setTimeout(function () {
@@ -130,7 +141,7 @@ AuthService.prototype.getAuthenticatedSourceUserData = function () {
   var xhr = new XMLHttpRequest()
   console.log('getAuthenticatedSourceUserData', self.anonymousToken)
 
-  var url = 'https://source.firebaseio.com/auth/requests/' + self.anonymousToken.user.id + '.json?auth=' + self.anonymousToken.token;
+  var url = 'https://' + this.firebase + '.firebaseio.com/auth/requests/' + self.anonymousToken.user.id + '.json?auth=' + self.anonymousToken.token;
   xhr.open('GET', url, true)
   xhr.onreadystatechange = function (oEvent) {
     if (xhr.readyState === 4 && xhr.status === 200) {

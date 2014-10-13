@@ -2,8 +2,8 @@
 <ExtensionList>
     <Extension Id="<%=panel['identifier']%>">
         <HostList>
-           <Host Name="PHXS" Port="<%=panel['debug-port']%>"/>
-           <Host Name="PHSP" Port="<%=panel['debug-port']%>"/>
+           <Host Name="PHXS" Port="<%=panel.debugPort %>"/>
+           <Host Name="PHSP" Port="<%=panel.debugPort %>"/>
         </HostList>
     </Extension>
 </ExtensionList>

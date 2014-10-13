@@ -5,8 +5,8 @@
     </ExtensionList>
     <ExecutionEnvironment>
         <HostList>
-            <Host Name="PHXS" Version="[<%= panel['photoshop-target-version'].join(',') %>]" />
-            <Host Name="PHSP" Version="[<%= panel['photoshop-target-version'].join(',') %>]" />
+            <Host Name="PHXS" Version="[<%= panel.photoshopVersion.join(',') %>]" />
+            <Host Name="PHSP" Version="[<%= panel.photoshopVersion.join(',') %>]" />
         </HostList>
         <LocaleList>
             <Locale Code="All" />
