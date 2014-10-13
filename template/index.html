@@ -6,9 +6,11 @@
 	<script>document.documentElement.classList.add(navigator.platform.toLowerCase().indexOf('mac') !== -1 ? 'os-darwin' : 'os-windows')</script>
 	<link rel="stylesheet" href="main.css">
 	<script src="lib/CSInterface.js"></script>
+	<script src="lib/ThemeManager.js"></script>
+	<% if((panel['update-checker'] && panel['update-checker'] === true) || (panel['requires-auth'] && panel['requires-auth'] === true)) {%>
 	<script src="lib/Util.js"></script>
 	<script src="lib/AppConfig.js"></script>
-	<script src="lib/ThemeManager.js"></script>
+	<% } %>
 	<% if(panel['update-checker'] && panel['update-checker'] === true) {%><script src="lib/UpdateChecker.js"></script><% } %>
 	<% if(panel['requires-auth'] && panel['requires-auth'] === true) {%><script src="auth.js"></script><% } %>
 	<script src="main.js"></script>

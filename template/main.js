@@ -1,9 +1,9 @@
-window.cs = new CSInterface();
+window.cs = new CSInterface()
 var bootstraped = false
-var appConfig = new AppConfig();
+var appConfig = new AppConfig()
 
 <% if(panel['requires-auth'] && panel['requires-auth'] === true) {%>
-var requiresAuth = true;
+var requiresAuth = true
 var pluginAuthId = '<%= panel['sourceProductID'] %>'
 var authToken = null
 <% } else  {%>
@@ -51,17 +51,6 @@ window.changeTheme = function (e) {
   }
 }
 
-window.sendPluginInfo = function() {
-  // pass any globally needed params, they will be attached to iframe's global context
-  // PluginInfo object
-  // var pluginInfoMessage = {
-  //   appVersionString: ,
-  //   authToken: authToken
-  // }
-
-  // iframe.contentWindow.postMessage(pluginInfoMessage, '*')
-}
-
 var loginCallback = false
 var showLogin = function (authService) {
   document.getElementById('login-button').innerHTML = 'Sign in with your Source account'
@@ -81,10 +70,10 @@ var checkAuth = function() {
   authService.errorCallback = function(data, status) {
     if (status == 400 || status === 401 || status === 403) {
       console.log('Using expired or invalid token, should be invalidated')
-      console.log('Invalidation result', authService.tokenStore.invalidate());
+      console.log('Invalidation result', authService.tokenStore.invalidate())
     } else if (status == 0) {
       if (!navigator.onLine) {
-        alert('This extension needs internet connection for full functionality. Please check your internet connection and try again.\n\nSorry for that, offline version is high on our priority list.');
+        alert('This extension needs internet connection for full functionality. Please check your internet connection and try again.\n\nSorry for that, offline version is high on our priority list.')
       }
     } else {
       alert('Unexpected error: ' + data  + 'Status:' + status + ' Please try again later. If problem persist, contact our support at team@madebysource.com')
