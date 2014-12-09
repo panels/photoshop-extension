@@ -19,6 +19,11 @@ if (window.localStorage.devMode === undefined) {
 }
 devMode = window.localStorage.devMode
 
+var addr = 'http://127.0.0.1';
+if (<%= typeof panel.useSSL !== 'undefined' && panel.useSSL ? 'true' : 'false' %>) {
+  addr = 'https://sourcelocalhost.com'
+}
+
 // dev
 if (cs.getHostCapabilities().EXTENDED_PANEL_MENU) {
   menuString = '<Menu>\
@@ -61,7 +66,7 @@ var enableGenerator = function () {
 
 var poll = function () {
   var script = document.createElement('script')
-  script.src = 'http://127.0.0.1:<%= panel.port %>/_panels/ping?callback=init&random=' + Math.random()
+  script.src = addr + ':<%= panel.port %>/_panels/ping?callback=init&random=' + Math.random()
   script.onerror = function () {
     enableGenerator()
     document.body.removeChild(script)
@@ -137,7 +142,7 @@ var checkAuth = function() {
 var startPanel = function () {
   document.body.classList.remove('login')
 
-  var url = 'http://127.0.0.1:<%= panel.port %>/panel/?platform=photoshop&version=' + appConfig.getVersionString()
+  var url = addr + ':<%= panel.port %>/panel/?platform=photoshop&version=' + appConfig.getVersionString()
 
   if (requiresAuth === true) {
     url += '&token=' + authToken
