@@ -52,6 +52,9 @@ if (cs.getHostCapabilities().EXTENDED_PANEL_MENU) {
   })
 }
 <% } %>
+<% if (typeof staging !== 'undefined' && staging === true) { %>
+devMode = 'staging'
+<% } %>
 
 var iframe = null
 

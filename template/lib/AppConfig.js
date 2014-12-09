@@ -121,8 +121,11 @@ AppConfig.getVersionString = function() {
   os = csInterface.getOSInformation()
   var name = [];
 
-  if(debugMode) {
+  if (debugMode === true) {
     name.push('dev')
+  }
+  if (devMode) {
+    name.push(devMode)
   }
 
   var _os = "";
