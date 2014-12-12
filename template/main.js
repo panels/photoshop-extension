@@ -12,17 +12,17 @@ var pluginAuthId = null
 var authToken = null
 <% } %>
 
+var addr = 'http://127.0.0.1';
+if (<%= typeof panel.useSSL !== 'undefined' && panel.useSSL ? 'true' : 'false' %>) {
+  addr = 'https://sourcelocalhost.com'
+}
+
 var devMode = false
 <% if (typeof debug !== 'undefined' && debug === true) { %>
 if (window.localStorage.devMode === undefined) {
   window.localStorage.devMode = 'production'
 }
 devMode = window.localStorage.devMode
-
-var addr = 'http://127.0.0.1';
-if (<%= typeof panel.useSSL !== 'undefined' && panel.useSSL ? 'true' : 'false' %>) {
-  addr = 'https://sourcelocalhost.com'
-}
 
 // dev
 if (cs.getHostCapabilities().EXTENDED_PANEL_MENU) {
