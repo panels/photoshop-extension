@@ -1,6 +1,6 @@
 {
   "name": "panel-photoshop-extension",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "Generator for Photoshop extensions that connect to Panel",
   "main": "lib/main.js",
   "publishConfig": {
