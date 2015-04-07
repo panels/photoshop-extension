@@ -24,5 +24,8 @@
     "lodash.template": "^2.4.1",
     "prompt": "^0.2.13",
     "temp": "^0.8.0"
+  },
+  "engines": {
+    "node": ">=0.12.0"
   }
 }
