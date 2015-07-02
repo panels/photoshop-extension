@@ -20,7 +20,7 @@ var UpdateChecker = function() {
             "os_version": cs.getOSInformation(),
             "photoshop_version": cs.hostEnvironment.appVersion,
             "events": [], //TODO hook event tracking mechanism
-            "channel": '<%= panel.sourceChannel || 'stable' %>'
+            "channel": '<%= (panel.madebysource && panel.madebysource.channel) || 'stable' %>'
         }
         console.log('Checking updates, payload:', payload)
         var xhr = new XMLHttpRequest()
@@ -49,7 +49,7 @@ var UpdateChecker = function() {
     }
 
     UpdateChecker.confirmUpdate = function(url) {
-      var script = "confirm('New version of extension is available. Do you want to download it?')"
+      var script = "confirm('New version of <%= panel.title %> extension is available. Do you want to download it?')"
       cs.evalScript(script, function(result) {
         if(result === 'true') {
           UpdateChecker.openBrowser(url);
