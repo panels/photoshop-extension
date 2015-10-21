@@ -7,9 +7,9 @@
 	<link rel="stylesheet" href="main.css">
 	<script src="lib/CSInterface.js"></script>
 	<script src="lib/ThemeManager.js"></script>
-	<% if (panel.madebysource) {%>
 	<script src="lib/Util.js"></script>
 	<script src="lib/AppConfig.js"></script>
+	<% if (panel.madebysource) {%>
 	<% if (panel.madebysource.updateCheck === true) {%><script src="lib/UpdateChecker.js"></script><% } %>
 	<% if (panel.madebysource.requiresAuth === true) {%><script src="auth.js"></script><% } %>
 	<% } %>
