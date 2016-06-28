@@ -1,6 +1,15 @@
 window.cs = new CSInterface()
 var bootstraped = false
-var appConfig = new AppConfig()
+
+if (typeof AppConfig !== "undefined") {
+  var appConfig = new AppConfig()
+} else {
+  var appConfig = {
+    getVersionString: function() {
+      return '';
+    }
+  }
+}
 
 <% if (panel.madebysource && panel.madebysource.requiresAuth && panel.madebysource.requiresAuth === true) { %>
 var requiresAuth = true
